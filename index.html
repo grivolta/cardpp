@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrice Carte</title>
+  <style>
+    .card {
+      width: 50px;
+      height: 70px;
+      border: 1px solid #000;
+      margin: 5px;
+      display: inline-block;
+      cursor: pointer;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    // Funzione per generare la matrice delle carte
+    function generateCardMatrix() {
+      const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+      const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+      const matrixContainer = $('#card-matrix');
+
+      for (let i = 0; i < suits.length + 1; i++) {
+        for (let j = 0; j < values.length + 1; j++) {
+          const card = $('<div class="card"></div>');
+
+          if (i === 0 && j > 0) {
+            // Prima riga: valori
+            card.text(values[j - 1]);
+            card.css('background-color', 'white');
+          } else if (j === 0 && i > 0) {
+            // Prima colonna: semi
+            card.text(suits[i - 1][0]); // Usa solo la prima lettera del seme
+            card.css('background-color', 'black');
+            card.css('color', 'white');
+          } else if (i > 0 && j > 0) {
+            // Casella della matrice
+            card.text(`${values[j - 1]} ${suits[i - 1][0]}`);
+            // Imposta uno sfondo colorato per la casella
+            // Aggiungi un gestore di clic per la carta
+            card.attr('data-suit', suits[i - 1]);
+            card.attr('data-value', values[j - 1]);
+            card.css('background-color', 'lightgray');
+          } else {
+            // Casella vuota in alto a sinistra
+            card.css('background-color', 'white');
+          }
+
+          matrixContainer.append(card);
+        }
+      }
+    }
+
+    // Resto del tuo codice rimane invariato...
+  </script>
+</head>
+<body>
+  <div id="card-matrix">
+    <!-- Matrice delle carte verrà generata qui -->
+  </div>
+  <div id="buttons">
+    <button id="preflop-btn">Pre-flop</button>
+    <button id="postflop-btn">Post-flop</button>
+  </div>
+</body>
+</html>
